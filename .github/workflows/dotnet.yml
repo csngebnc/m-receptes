@@ -1,0 +1,24 @@
+name: .NET build
+
+on:
+  push:
+    paths:
+      - src-backend/**
+    branches: [ dev ]
+  pull_request:
+    paths:
+      - src-backend/**
+    branches: [ dev ]
+  workflow_dispatch:
+jobs:
+  build:
+    runs-on: windows-latest
+
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.0.x'
+      - name: Build
+        run: dotnet build src-backend/Receptes.Api/Receptes.Api.csproj

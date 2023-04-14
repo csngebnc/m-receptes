@@ -2,8 +2,12 @@ name: Android build
 
 on:
   push:
+    paths:
+      - src-mobile/**
     branches: [ dev ]
   pull_request:
+    paths:
+      - src-mobile/**
     branches: [ dev ]
   workflow_dispatch:
 jobs:
