@@ -22,6 +22,6 @@ jobs:
       - name: Grant execute permission for gradlew
         run: chmod +x src-mobile/gradlew
       - name: Build with Gradle
-        run: ./src-mobile/gradlew build
+        run: ./src-mobile/gradlew build --stacktrace
       - name: Build Debug APK
-        run: ./src-mobile/gradlew assembleDebug
+        run: ./src-mobile/gradlew assembleDebug --stacktrace
