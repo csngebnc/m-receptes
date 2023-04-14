@@ -1,4 +1,4 @@
-package com.example.mreceptes.ui.theme
+package hu.bme.aut.android.receptes.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

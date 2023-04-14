@@ -1,4 +1,4 @@
-package com.example.mreceptes
+package hu.bme.aut.android.receptes
 
 import org.junit.Test
 
