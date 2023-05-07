@@ -350,3 +350,4 @@ MigrationBackup/
 .ionide/
 src-frontend/main/src/components.d.ts
 src-frontend/main/src/autoImports.d.ts
+src-backend/Receptes.Api/Properties/ServiceDependencies/Receptes - Web Deploy/profile.arm.json
