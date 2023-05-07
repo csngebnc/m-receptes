@@ -6,4 +6,13 @@
         <Nullable>enable</Nullable>
     </PropertyGroup>
 
+    <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
+      <PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.16" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\Receptes.Domain\Receptes.Domain.csproj" />
+    </ItemGroup>
+
 </Project>
