@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Receptes.Api.Dtos;
 using Receptes.Dal;
 using Receptes.Domain.Entities;
 
@@ -32,7 +31,7 @@ namespace Receptes.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<Recipe> CreateRecipe(CreateRecipeDto recipeDto)
+        public async Task<Recipe> CreateRecipe(Recipe recipeDto)
         {
             var recipe = new Recipe
             {
