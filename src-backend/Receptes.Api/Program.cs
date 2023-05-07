@@ -1,6 +1,12 @@
+using Microsoft.EntityFrameworkCore;
+using Receptes.Dal;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
+
+builder.Services.AddDbContext<ReceptesDbContext>(options => 
+    options.UseInMemoryDatabase("ReceptesDb"));
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
