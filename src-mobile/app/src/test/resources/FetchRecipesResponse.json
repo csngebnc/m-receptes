@@ -1,0 +1,26 @@
+[
+  {
+    "id": 0,
+    "ownerUsername": "string0",
+    "name": "string0",
+    "description": "string0"
+  },
+  {
+    "id": 1,
+    "ownerUsername": "string1",
+    "name": "string1",
+    "description": "string1"
+  },
+  {
+    "id": 2,
+    "ownerUsername": "string2",
+    "name": "string2",
+    "description": "string2"
+  },
+  {
+    "id": 3,
+    "ownerUsername": "string3",
+    "name": "string3",
+    "description": "string3"
+  }
+]
