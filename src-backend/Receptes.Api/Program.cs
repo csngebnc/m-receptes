@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using NSwag;
 using Receptes.Dal;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -15,7 +16,11 @@ builder.Services.AddSwaggerDocument();
 
 var app = builder.Build();
 
-app.UseOpenApi();
+app.UseOpenApi(a => {
+    a.PostProcess = (document, _) => {
+        document.Schemes = new[] { OpenApiSchema.Https, OpenApiSchema.Http };
+    };
+});
 app.UseSwaggerUi3();
 
 app.UseHttpsRedirection();

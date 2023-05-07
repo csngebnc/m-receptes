@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Receptes.Api.Dtos;
 using Receptes.Dal;
 using Receptes.Domain.Entities;
 
@@ -26,13 +25,13 @@ namespace Receptes.Api.Controllers
         }
 
         [HttpGet("single/{recipeId}")]
-        public async Task<Recipe> GetRecipe(Guid recipeId)
+        public async Task<Recipe> GetRecipe(int recipeId)
         {
             return await _context.Recipes.SingleAsync(x => x.Id == recipeId);
         }
 
         [HttpPost]
-        public async Task<Recipe> CreateRecipe(CreateRecipeDto recipeDto)
+        public async Task<Recipe> CreateRecipe(Recipe recipeDto)
         {
             var recipe = new Recipe
             {
@@ -64,7 +63,7 @@ namespace Receptes.Api.Controllers
         }
 
         [HttpDelete("delete/{recipeId}")]
-        public async Task DeleteRecipe(Guid recipeId)
+        public async Task DeleteRecipe(int recipeId)
         {
             var recipe = await _context.Recipes.SingleAsync(x => x.Id == recipeId);
 
