@@ -23,12 +23,12 @@ fun RecipesMainScreen(viewModel: MainViewModel) {
         color = MaterialTheme.colorScheme.background
     ) {
         Text(text = "Receptek")
-        items.forEach { poster ->
-            key(poster.id) {
+        items.forEach { recipe ->
+            key(recipe.id) {
 
                 Text(
                     modifier = Modifier.padding(top = 20.dp),
-                    text = poster.name
+                    text = recipe.name
                 )
             }
         }

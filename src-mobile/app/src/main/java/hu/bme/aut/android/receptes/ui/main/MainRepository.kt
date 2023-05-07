@@ -25,8 +25,8 @@ class MainRepository @Inject constructor(
         onCompletion: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
-        val posters: List<Recipe> = recipeDao.getRecipes()
-        if (posters.isEmpty()) {
+        val recipes: List<Recipe> = recipeDao.getRecipes()
+        if (recipes.isEmpty()) {
             // request API network call asynchronously.
             recipeService.fetchRecipes("csngebnc")
                 // handle the case when the API request gets a success response.
@@ -42,7 +42,7 @@ class MainRepository @Inject constructor(
                 // e.g. internal server error.
                 .onFailure { onError(message()) }
         } else {
-            emit(posters)
+            emit(recipes)
         }
     }.onStart { onStart() }.onCompletion { onCompletion() }.flowOn(Dispatchers.IO)
 }
