@@ -26,7 +26,7 @@ namespace Receptes.Api.Controllers
         }
 
         [HttpGet("single/{recipeId}")]
-        public async Task<Recipe> GetRecipe(Guid recipeId)
+        public async Task<Recipe> GetRecipe(int recipeId)
         {
             return await _context.Recipes.SingleAsync(x => x.Id == recipeId);
         }
@@ -64,7 +64,7 @@ namespace Receptes.Api.Controllers
         }
 
         [HttpDelete("delete/{recipeId}")]
-        public async Task DeleteRecipe(Guid recipeId)
+        public async Task DeleteRecipe(int recipeId)
         {
             var recipe = await _context.Recipes.SingleAsync(x => x.Id == recipeId);
 
