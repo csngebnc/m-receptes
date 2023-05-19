@@ -1,36 +1,76 @@
 package hu.bme.aut.android.receptes.ui.main
 
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import hu.bme.aut.android.receptes.model.Recipe
-import hu.bme.aut.android.receptes.ui.theme.ReceptesTheme
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.key
-import androidx.compose.ui.unit.dp
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import hu.bme.aut.android.receptes.ui.details.RecipeDetails
+import hu.bme.aut.android.receptes.ui.list.RecipeList
+import hu.bme.aut.android.receptes.ui.login.Login
+
 
 @Composable
-fun RecipesMainScreen(viewModel: MainViewModel) {
-    val items: List<Recipe> by viewModel.recipeList.collectAsState(initial = listOf())
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = MaterialTheme.colorScheme.background
-    ) {
-        Text(text = "Receptek")
-        items.forEach { recipe ->
-            key(recipe.id) {
+fun RecipesMainScreen() {
+    var username by remember { mutableStateOf("") }
+    val navController = rememberNavController()
 
-                Text(
-                    modifier = Modifier.padding(top = 20.dp),
-                    text = recipe.name
-                )
-            }
+    NavHost(navController = navController, startDestination = NavScreen.Login.route) {
+        composable(NavScreen.Login.route) {
+            Login(
+                onLogin = {
+                    username = it
+                    navController.navigate(NavScreen.List.route)
+                },
+            )
         }
+        composable(NavScreen.List.route) {
+            RecipeList(
+                username = username,
+                viewModel = hiltViewModel(),
+                selectRecipe = {
+                    navController.navigate("${NavScreen.RecipeDetails.route}/$it")
+                },
+                addRecipe = {
+                    navController.navigate("${NavScreen.RecipeDetails.route}/-1")
+                }
+            )
+        }
+        composable(NavScreen.RecipeDetails.routeWithArgument) { backStackEntry ->
+            val recipeId = backStackEntry.arguments?.getString(NavScreen.RecipeDetails.argument0)
+                ?: null
+
+            var id: Long? = null
+            if (recipeId != null && recipeId.toLong() > 0) {
+                id = recipeId.toLong()
+            }
+
+            RecipeDetails(
+                username = username,
+                recipeId = id,
+                onBack = {
+                    navController.popBackStack()
+                },
+                viewModel = hiltViewModel()
+            )
+        }
+    }
+}
+
+sealed class NavScreen(val route: String) {
+
+    object Login : NavScreen("Login")
+    object List : NavScreen("List")
+
+    object RecipeDetails : NavScreen("RecipeDetails") {
+
+        const val routeWithArgument: String = "RecipeDetails/{recipeId}"
+
+        const val argument0: String = "recipeId"
     }
 }

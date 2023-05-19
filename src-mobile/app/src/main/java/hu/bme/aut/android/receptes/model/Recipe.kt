@@ -3,14 +3,15 @@ package hu.bme.aut.android.receptes.model
 import androidx.compose.runtime.Immutable
 import androidx.room.Entity
 import androidx.room.PrimaryKey
+import com.google.gson.annotations.SerializedName
 
 @Entity(tableName = "recipes")
 @Immutable
 data class Recipe(
-    @PrimaryKey(autoGenerate = true) var id: Int,
-    var name: String,
-    var description: String,
-    var ownerUsername: String,
+    @SerializedName("id")@PrimaryKey(autoGenerate = true) var id: Long,
+    @SerializedName("name")var name: String,
+    @SerializedName("description")var description: String,
+    @SerializedName("ownerUsername")var ownerUsername: String,
 ) {
     companion object {
         fun mock() = Recipe(

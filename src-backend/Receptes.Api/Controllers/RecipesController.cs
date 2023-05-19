@@ -30,7 +30,7 @@ namespace Receptes.Api.Controllers
             return await _context.Recipes.SingleAsync(x => x.Id == recipeId);
         }
 
-        [HttpPost]
+        [HttpPost("post")]
         public async Task<Recipe> CreateRecipe(Recipe recipeDto)
         {
             var recipe = new Recipe
@@ -47,7 +47,7 @@ namespace Receptes.Api.Controllers
             return recipe;
         }
 
-        [HttpPut]
+        [HttpPut("put")]
         public async Task<Recipe> UpdateRecipe(Recipe recipeToUpdate)
         {
             var recipe = await _context.Recipes.SingleAsync(x => x.Id == recipeToUpdate.Id && x.OwnerUsername == recipeToUpdate.OwnerUsername);
@@ -63,13 +63,15 @@ namespace Receptes.Api.Controllers
         }
 
         [HttpDelete("delete/{recipeId}")]
-        public async Task DeleteRecipe(int recipeId)
+        public async Task<Recipe> DeleteRecipe(int recipeId)
         {
             var recipe = await _context.Recipes.SingleAsync(x => x.Id == recipeId);
 
             _context.Remove(recipe);
 
             await _context.SaveChangesAsync();
+
+            return recipe;
         }
 
         [HttpDelete("/clear-db")]

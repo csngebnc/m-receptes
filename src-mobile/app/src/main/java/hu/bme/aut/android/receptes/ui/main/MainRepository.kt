@@ -18,31 +18,4 @@ import kotlinx.coroutines.Dispatchers
 class MainRepository @Inject constructor(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao
-) {
-    @WorkerThread
-    fun loadRecipes(
-        onStart: () -> Unit,
-        onCompletion: () -> Unit,
-        onError: (String) -> Unit
-    ) = flow {
-        val recipes: List<Recipe> = recipeDao.getRecipes()
-        if (recipes.isEmpty()) {
-            // request API network call asynchronously.
-            recipeService.fetchRecipes("csngebnc")
-                // handle the case when the API request gets a success response.
-                .suspendOnSuccess {
-                    if (!data.isEmpty()) {
-                        for (item in data) {
-                            recipeDao.insertRecipe(item)
-                        }
-                    }
-                    emit(data)
-                }
-                // handle the case when the API request is fails.
-                // e.g. internal server error.
-                .onFailure { onError(message()) }
-        } else {
-            emit(recipes)
-        }
-    }.onStart { onStart() }.onCompletion { onCompletion() }.flowOn(Dispatchers.IO)
-}
+) {}

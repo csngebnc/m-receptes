@@ -24,12 +24,12 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
-            .client(okHttpClient)
             .baseUrl(
                 "https:/www.csongebence.hu/api/recipes/"
             )
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(ApiResponseCallAdapterFactory.create())
+            .client(okHttpClient)
             .build()
     }
     @Provides

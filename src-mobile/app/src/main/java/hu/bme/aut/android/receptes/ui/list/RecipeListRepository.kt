@@ -1,4 +1,4 @@
-package hu.bme.aut.android.receptes.ui.editor
+package hu.bme.aut.android.receptes.ui.list
 
 import androidx.annotation.WorkerThread
 import com.skydoves.sandwich.message
@@ -14,48 +14,37 @@ import kotlinx.coroutines.flow.onCompletion
 import kotlinx.coroutines.flow.onStart
 import javax.inject.Inject
 
-class EditorRepository @Inject constructor(
+class RecipeListRepository @Inject constructor(
     private val recipeService: RecipeService,
     private val recipeDao: RecipeDao
 ) {
     @WorkerThread
-    fun insertRecipe(
-        recipe: Recipe,
+    fun loadRecipes(
+        username: String,
         onStart: () -> Unit,
         onCompletion: () -> Unit,
         onError: (String) -> Unit
     ) = flow {
-            recipe.ownerUsername = "csngebnc" // TODO REPLACE
+        val recipes: List<Recipe> = recipeDao.getRecipes(username)
+        if (recipes.isEmpty()) {
             // request API network call asynchronously.
-            recipeService.postRecipe(recipe)
+            recipeService.fetchRecipes(username)
                 // handle the case when the API request gets a success response.
                 .suspendOnSuccess {
-                    recipe.id = data.id
-                    recipeDao.insertRecipe(recipe)
+                    if (data.isNotEmpty()) {
+                        for (item in data) {
+                            recipeDao.insertRecipe(item)
+                        }
+                    }
                     emit(data)
                 }
                 // handle the case when the API request is fails.
                 // e.g. internal server error.
                 .onFailure { onError(message()) }
+        } else {
+            emit(recipes)
+        }
     }.onStart { onStart() }.onCompletion { onCompletion() }.flowOn(Dispatchers.IO)
 
-    @WorkerThread
-    fun updateRecipe(
-        recipe: Recipe,
-        onStart: () -> Unit,
-        onCompletion: () -> Unit,
-        onError: (String) -> Unit
-    ) = flow {
-        recipe.ownerUsername = "csngebnc" // TODO REPLACE
-        // request API network call asynchronously.
-        recipeService.putRecipe(recipe)
-            // handle the case when the API request gets a success response.
-            .suspendOnSuccess {
-                recipeDao.insertRecipe(recipe)
-                emit(data)
-            }
-            // handle the case when the API request is fails.
-            // e.g. internal server error.
-            .onFailure { onError(message()) }
-    }.onStart { onStart() }.onCompletion { onCompletion() }.flowOn(Dispatchers.IO)
+
 }
