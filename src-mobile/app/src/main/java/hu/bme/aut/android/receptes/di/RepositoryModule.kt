@@ -9,7 +9,6 @@ import hu.bme.aut.android.receptes.network.RecipeService
 import hu.bme.aut.android.receptes.persistence.RecipeDao
 import hu.bme.aut.android.receptes.ui.details.DetailRepository
 import hu.bme.aut.android.receptes.ui.list.RecipeListRepository
-import hu.bme.aut.android.receptes.ui.main.MainRepository
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -29,13 +28,5 @@ object RepositoryModule {
         recipeDao: RecipeDao
     ): RecipeListRepository {
         return RecipeListRepository(recipeService, recipeDao)
-    }
-    @Provides
-    @ViewModelScoped
-    fun provideMainRepository(
-        recipeService: RecipeService,
-        recipeDao: RecipeDao
-    ): MainRepository {
-        return MainRepository(recipeService, recipeDao)
     }
 }

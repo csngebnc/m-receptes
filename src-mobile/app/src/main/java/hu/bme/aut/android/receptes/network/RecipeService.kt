@@ -18,7 +18,7 @@ interface RecipeService {
     suspend fun fetchRecipes(@Path("userName") userName: String): ApiResponse<List<Recipe>>
 
     @GET("single/{recipeId}")
-    fun fetchRecipe(@Path("recipeId") recipeId: Int): ApiResponse<Recipe>
+    suspend fun fetchRecipe(@Path("recipeId") recipeId: Int): ApiResponse<Recipe>
 
     @POST("post")
     suspend fun postRecipe(@Body recipe: Recipe): Response<Recipe>

@@ -19,11 +19,11 @@ class RecipeServiceTest : ApiMock() {
             enqueueResponse("FetchRecipesResponse.json")
 
             var list = listOf<Recipe>()
-            recipeService.fetchRecipes("csngebnc").suspendOnSuccess { list = data }
+            recipeService.fetchRecipes("string0").suspendOnSuccess { list = data }
 
             val request = mockWebServer.takeRequest()
             assertThat(list.size, equalTo(4))
-            assertThat(request.path, equalTo("/all/csngebnc"))
+            assertThat(request.path, equalTo("/all/string0"))
         }
     }
 
