@@ -28,12 +28,52 @@ class RecipeDaoTest : LocalDatabase() {
     }
 
     @Test
+    fun listRecipesTest() = runTest {
+        val mockRecipe = Recipe.mock()
+        recipeDao.insertRecipe(mockRecipe)
+        mockRecipe.id = 2
+        recipeDao.insertRecipe(mockRecipe)
+
+        val loadFromDB = recipeDao.getRecipes("csngebnc")
+        assertThat(loadFromDB.size, equalTo(2))
+    }
+
+    @Test
     fun insertAndGetRecipeTest() = runTest {
         val mockRecipe = Recipe.mock()
         recipeDao.insertRecipe(mockRecipe)
 
-        val loadFromDB = recipeDao.getRecipes()
+        val loadFromDB = recipeDao.getRecipes("csngebnc")
         assertThat(loadFromDB.size, equalTo(1))
         assertThat(loadFromDB[0].toString(), `is`(mockRecipe.toString()))
+    }
+
+    @Test
+    fun insertThenUpdateReplacesRecipeTest() = runTest {
+        val mockRecipe = Recipe.mock()
+        recipeDao.insertRecipe(mockRecipe)
+
+        mockRecipe.name = "test2"
+
+        recipeDao.insertRecipe(mockRecipe)
+
+        val loadFromDB = recipeDao.getRecipes("csngebnc")
+        assertThat(loadFromDB.size, equalTo(1))
+        assertThat(loadFromDB[0].toString(), `is`(mockRecipe.toString()))
+    }
+
+    @Test
+    fun insertAndDeleteRecipeTest() = runTest {
+        val mockRecipe = Recipe.mock()
+        recipeDao.insertRecipe(mockRecipe)
+
+        var loadFromDB = recipeDao.getRecipes("csngebnc")
+        assertThat(loadFromDB.size, equalTo(1))
+        assertThat(loadFromDB[0].toString(), `is`(mockRecipe.toString()))
+
+        recipeDao.deleteRecipe(mockRecipe)
+
+        loadFromDB = recipeDao.getRecipes("csngebnc")
+        assertThat(loadFromDB.size, equalTo(0))
     }
 }

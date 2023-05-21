@@ -8,9 +8,7 @@ import dagger.hilt.android.scopes.ViewModelScoped
 import hu.bme.aut.android.receptes.network.RecipeService
 import hu.bme.aut.android.receptes.persistence.RecipeDao
 import hu.bme.aut.android.receptes.ui.details.DetailRepository
-import hu.bme.aut.android.receptes.ui.editor.EditorRepository
-import hu.bme.aut.android.receptes.ui.login.LoginRepository
-import hu.bme.aut.android.receptes.ui.main.MainRepository
+import hu.bme.aut.android.receptes.ui.list.RecipeListRepository
 
 @Module
 @InstallIn(ViewModelComponent::class)
@@ -25,26 +23,10 @@ object RepositoryModule {
     }
     @Provides
     @ViewModelScoped
-    fun provideEditorRepository(
+    fun provideRecipeListRepository(
         recipeService: RecipeService,
         recipeDao: RecipeDao
-    ): EditorRepository {
-        return EditorRepository(recipeService, recipeDao)
-    }
-    @Provides
-    @ViewModelScoped
-    fun provideLoginRepository(
-        recipeService: RecipeService,
-        recipeDao: RecipeDao
-    ): LoginRepository {
-        return LoginRepository(recipeService, recipeDao)
-    }
-    @Provides
-    @ViewModelScoped
-    fun provideMainRepository(
-        recipeService: RecipeService,
-        recipeDao: RecipeDao
-    ): MainRepository {
-        return MainRepository(recipeService, recipeDao)
+    ): RecipeListRepository {
+        return RecipeListRepository(recipeService, recipeDao)
     }
 }
