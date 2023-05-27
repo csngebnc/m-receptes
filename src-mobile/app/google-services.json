@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "675266948923",
+    "project_id": "receptes-b848b",
+    "storage_bucket": "receptes-b848b.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:675266948923:android:6ae954509dc9306b29111e",
+        "android_client_info": {
+          "package_name": "hu.bme.aut.android.receptes"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqk5Rz_Rz9XD3kWQNcfSxeoixdYerT0Kw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
