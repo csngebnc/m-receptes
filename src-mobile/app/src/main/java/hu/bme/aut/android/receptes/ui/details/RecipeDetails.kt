@@ -65,6 +65,10 @@ fun RecipeDetails(
         }
     }
 
+    fun crash() {
+        throw RuntimeException("Test Crash") // Force a crash
+    }
+
     fun delete() {
         if (recipeId == null) {
             recipe.id = data.id
@@ -153,13 +157,22 @@ fun RecipeDetails(
             }
         }
 
+        Row(horizontalArrangement = Arrangement.End) {
+            Button(
+                onClick = { crash() },
+                modifier = Modifier.padding(end = 8.dp)
+            ) {
+                Text(text = "Crash")
+            }
+        }
+
         Row(
             horizontalArrangement = Arrangement.End
         ) {
             if (!isEditing) {
                 Button(
-                    onClick = { onBack() },
-                    modifier = Modifier.padding(end = 8.dp)
+                        onClick = { onBack() },
+                modifier = Modifier.padding(end = 8.dp)
                 ) {
                     Text(text = "Vissza")
                 }

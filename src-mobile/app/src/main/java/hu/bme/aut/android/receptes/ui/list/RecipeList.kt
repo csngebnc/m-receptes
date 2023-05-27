@@ -31,15 +31,21 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.text.font.FontWeight
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.analytics.FirebaseAnalytics
+import com.google.firebase.analytics.ktx.analytics
+import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.ktx.Firebase
 
 
 @Composable
 fun RecipeList(
+    analytics: FirebaseAnalytics,
     username: String,
     selectRecipe: (Long) -> Unit,
     addRecipe: () -> Unit,
     viewModel: RecipeListViewModel
 ) {
+
     LaunchedEffect(key1 = username) {
         viewModel.loadRecipes(username)
     }
@@ -64,7 +70,13 @@ fun RecipeList(
                     key(item.id) {
                         Row(modifier = Modifier
                             .fillMaxWidth()
-                            .clickable { selectRecipe(item.id) }) {
+                            .clickable {
+                                analytics.logEvent(FirebaseAnalytics.Event.SELECT_CONTENT) {
+                                    param(FirebaseAnalytics.Param.ITEM_ID, item.id);
+                                    param(FirebaseAnalytics.Param.ITEM_NAME, item.name);
+                                }
+                                selectRecipe(item.id)
+                            }) {
                             ListItem(item)
                         }
                         Separator()

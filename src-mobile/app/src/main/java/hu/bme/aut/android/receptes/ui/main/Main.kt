@@ -10,13 +10,14 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.google.firebase.analytics.FirebaseAnalytics
 import hu.bme.aut.android.receptes.ui.details.RecipeDetails
 import hu.bme.aut.android.receptes.ui.list.RecipeList
 import hu.bme.aut.android.receptes.ui.login.Login
 
 
 @Composable
-fun RecipesMainScreen() {
+fun RecipesMainScreen(analytics: FirebaseAnalytics) {
     var username by remember { mutableStateOf("") }
     val navController = rememberNavController()
 
@@ -31,6 +32,7 @@ fun RecipesMainScreen() {
         }
         composable(NavScreen.List.route) {
             RecipeList(
+                analytics = analytics,
                 username = username,
                 viewModel = hiltViewModel(),
                 selectRecipe = {
